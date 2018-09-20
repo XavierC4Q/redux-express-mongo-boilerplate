@@ -1,6 +1,7 @@
 import * as actions from './actions'
 import axios from 'axios'
 
+
 const loginUser = (username, password) => {
     return (dispatch) => {
         try {
@@ -35,17 +36,6 @@ const registerUser = (username, password) => {
     }
 }
 
-const loadAllUsers = () => {
-    return (dispatch) => {
-        axios.get('/users').then((res) => {
-            dispatch({ type: actions.ALL_USERS, users: res.data })
-        })
-        .catch(error => {
-            dispatch({ type: actions.USER_ERROR, error: error })
-        })
-    }
-}
-
 const logoutUser = () => {
     return (dispatch) => {
         axios.get('/users/logout').then(() => {
@@ -60,6 +50,5 @@ const logoutUser = () => {
 export default  {
     loginUser,
     registerUser,
-    loadAllUsers,
     logoutUser
 }

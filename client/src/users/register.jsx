@@ -1,11 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import registerUser from './actionCreators'
+import actionCreators from './actionCreators'
 import inputs from 'react-stateless-input'
 
-
-const Register = ({ currentUser, registerUser, history }) => {
-    console.log(registerUser)
+const Register = ({ currentUser, register, history }) => {
     if(currentUser){
         history.push('/');
     }
@@ -14,7 +12,7 @@ const Register = ({ currentUser, registerUser, history }) => {
             <form onSubmit={(e) => {
                 e.preventDefault();
                 const { username, password } = inputs();
-                registerUser(username, password);
+                register(username, password);
                 history.push('/')
             }}>
             <div>
@@ -34,10 +32,10 @@ const mapStateToProps = (state) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        registerUser: (username, password) => dispatch(registerUser(username, password))
-    };
-};
+const mapDispatchToProps = dispatch => ({
+    register: (username, password) => {
+        dispatch(actionCreators.registerUser(username, password))
+    }
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);
