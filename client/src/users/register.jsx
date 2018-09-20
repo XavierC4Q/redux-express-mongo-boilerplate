@@ -1,11 +1,12 @@
 import React from 'react'
+import {Redirect, withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import actionCreators from './actionCreators'
 import inputs from 'react-stateless-input'
 
-const Register = ({ currentUser, register, history }) => {
+const Register = ({ currentUser, register }) => {
     if(currentUser){
-        history.push('/');
+        return (<Redirect to='/'/>)
     }
     return(
         <div>
@@ -13,7 +14,6 @@ const Register = ({ currentUser, register, history }) => {
                 e.preventDefault();
                 const { username, password } = inputs();
                 register(username, password);
-                history.push('/')
             }}>
             <div>
                 <h1>REGISTER PAGE</h1>
@@ -38,4 +38,4 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));

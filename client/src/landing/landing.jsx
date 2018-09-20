@@ -3,24 +3,23 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import actionCreators from './actionCreators'
 
-class Landing extends React.PureComponent {
+class Landing extends React.Component {
 
     componentDidMount() {
         this.props.getAllUsers()
     }
     
     render() {
-        console.log(this.props)
         return (
             <div>
+                <h1>HOME PAGE</h1>
                 {
-                    this.props.currentUser ? '' : <nav>
+                    this.props.currentUser ? <button onClick={() => {this.props.logout()}}>LOGOUT</button> : <nav>
                         <Link to='/register'>REGISTER</Link>
                         {' '}
                         <Link to='/login'>LOGIN</Link>
                     </nav>
                 }
-                <h1>HOME PAGE</h1>
             </div>
         )
     }
@@ -36,6 +35,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
     getAllUsers: () => {
         dispatch(actionCreators.loadAllUsers())
+    },
+    logout: () => {
+        dispatch(actionCreators.logoutUser())
     }
 })
 
