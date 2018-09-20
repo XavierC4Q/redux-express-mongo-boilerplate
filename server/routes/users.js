@@ -64,6 +64,9 @@ userRouter.route('/login')
         if (error) {
           res.json(new Error('failure to login req'))
         }
+        if(!user){
+          res.json(new Error(`USER LOGIN FAIL`))
+        }
         const loginSuccess = {
           id: user._id,
           username: user.username
@@ -72,5 +75,15 @@ userRouter.route('/login')
       })
     })
   })
+
+userRouter.route('/logout')
+  .get((req, res) => {
+    if(req.session.passport){
+      req.session.destroy()
+      res.json('successful logout')
+    }
+    res.json('already logged in')
+  })
+
 
 module.exports = userRouter;
