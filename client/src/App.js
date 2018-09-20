@@ -1,36 +1,36 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
-import logo from './logo.svg';
-import './App.css';
+import {Route, Switch, Link} from 'react-router-dom'
+import Register from './users/register'
+
+const Home = () => {
+  return(
+    <div>you are a false god and a worse liar
+      <Link to='/register'>Create your account</Link>
+    </div>
+  )
+}
 
 class App extends Component {
   render() {
-    console.log(this.props)
+    console.log('HOME PAGE PROPS',this.props)
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <Switch>
+        <Route  exact='exact' path='/register' component={Register}/>
+          <Route  path='/' component={Home}/>}/>
+        </Switch>
       </div>
     );
   }
 }
 
 
-const stateToProps = (state) => {
+const mapStateToProps = (state) => {
   return {
-    users: state.users
+    currentUser: state.users.currentUser
   }
 }
 
-const dispatchToProps = (dispatch) => {
-  return {
-    calls: dispatch
-  }
-}
 
-export default connect(stateToProps, dispatchToProps)(App);
+export default connect(mapStateToProps)(App);

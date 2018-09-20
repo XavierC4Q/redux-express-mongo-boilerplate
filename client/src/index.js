@@ -19,7 +19,7 @@ const config = () => {
 }
 
 const store = config()
-console.log(allReducers)
+
 ReactDOM.render(
 <ReduxProvider store={store}>
     <BrowserRouter>

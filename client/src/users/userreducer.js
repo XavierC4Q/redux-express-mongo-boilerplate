@@ -24,8 +24,9 @@ export default (state = {
                 currentUser: null,
                 allUsers: [...state.allUsers]
             }
-        case 'ERROR':
+        case 'USER_ERROR':
             return {
+                ...state,
                 message: new Error(`Your error is ${action.error.message}`)
             }
         default:

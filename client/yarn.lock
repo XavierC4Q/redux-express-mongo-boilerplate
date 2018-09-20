@@ -5603,6 +5603,14 @@ react-scripts@1.1.5:
   optionalDependencies:
     fsevents "^1.1.3"
 
+react-stateless-input@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-stateless-input/-/react-stateless-input-1.0.3.tgz#e9a8c9a43f7a4f16825cbfaf99dfdf55750e858d"
+
+react-stateless-inputs@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-stateless-inputs/-/react-stateless-inputs-1.0.3.tgz#0f7940cbb4216fab51c134f1f469a820064ef84c"
+
 react@^16.5.2:
   version "16.5.2"
   resolved "https://registry.yarnpkg.com/react/-/react-16.5.2.tgz#19f6b444ed139baa45609eee6dc3d318b3895d42"
