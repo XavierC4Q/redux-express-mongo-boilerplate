@@ -10,11 +10,14 @@ class Landing extends React.Component {
     }
     
     render() {
+        let profilepath = this.props.currentUser ? `/profile/${this.props.currentUser.username}` : null
         return (
             <div>
                 <h1>HOME PAGE</h1>
                 {
-                    this.props.currentUser ? <button onClick={() => {this.props.logout()}}>LOGOUT</button> : <nav>
+                    this.props.currentUser ? <nav>
+                        <Link to={profilepath}>PROFILE</Link>
+                    </nav> : <nav>
                         <Link to='/register'>REGISTER</Link>
                         {' '}
                         <Link to='/login'>LOGIN</Link>
@@ -35,9 +38,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
     getAllUsers: () => {
         dispatch(actionCreators.loadAllUsers())
-    },
-    logout: () => {
-        dispatch(actionCreators.logoutUser())
     }
 })
 

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {Route, Switch, Redirect, withRouter} from 'react-router-dom'
-import Register from './users/register'
-import Login from './users/login'
+import Register from './auth/register'
+import Login from './auth/login'
 import Landing from './landing/landing'
+import Profile from './profile/profile'
 
 class App extends Component {
   render() {
-    console.log('HOME PAGE PROPS',this.props)
     return (
       <div>
         <Switch>
@@ -18,6 +18,10 @@ class App extends Component {
           <Route exact path='/register' render={() => (
             this.props.currentUser ? (<Redirect to='/'/>) : (<Register/>)
           )}/>
+          <Route exact path='/profile/:username' render={(props) =>{
+            const { username } = props.match.params
+            return(<Profile username={username}/>)
+          }}/>
         </Switch>
       </div>
     );

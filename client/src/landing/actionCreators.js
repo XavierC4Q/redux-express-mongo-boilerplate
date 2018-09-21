@@ -12,23 +12,6 @@ const loadAllUsers = () => {
     }
 }
 
-const logoutUser = () => {
-    return (dispatch) => {
-        axios.get('/users/logout').then(() => {
-                dispatch({
-                    type: actions.LOGOUT
-                })
-            })
-            .catch(error => {
-                dispatch({
-                    type: actions.USER_ERROR,
-                    error: error
-                })
-            })
-    }
-}
-
 export default {
-    loadAllUsers,
-    logoutUser
+    loadAllUsers
 }
