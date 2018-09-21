@@ -36,7 +36,7 @@ todosRouter.route('/add')
       username
     })
     newTodo.save()
-    res.json('success')
+    res.json(newTodo)
   })
 
 todosRouter.route('/delete/:id')

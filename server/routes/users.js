@@ -12,6 +12,23 @@ userRouter.route('/')
     })
   })
 
+userRouter.route('/:username')
+  .get((req, res) => {
+    const {
+      username
+    } = req.params
+    Users.findOne({ username: username }, (error, user) => {
+      if (error) {
+        res.json(error)
+      }
+      if (!user) {
+        res.json(new Error('NOT A USER'))
+      }
+
+      res.json(user)
+    })
+  })
+
 userRouter.route('/register')
   .post(async (req, res) => {
     const {
