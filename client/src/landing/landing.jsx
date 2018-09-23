@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 import actionCreators from './actionCreators'
 
@@ -10,6 +11,7 @@ class Landing extends React.Component {
     }
     
     render() {
+        console.log(this.props.currentUser)
         let profilepath = this.props.currentUser ? `/profile/${this.props.currentUser.username}` : null
         return (
             <div>
@@ -29,6 +31,7 @@ class Landing extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log('THE STATE OF THINGS', state.users)
     return {
         allUsers: state.users.allUsers,
         currentUser: state.users.currentUser

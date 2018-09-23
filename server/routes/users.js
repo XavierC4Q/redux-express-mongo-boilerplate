@@ -19,7 +19,7 @@ userRouter.route('/')
 userRouter.route('/logout')
   .get((req, res) => {
     req.session.destroy()
-    res.send('logged out nicely')
+    res.send({ data: true })
   })
 
 
@@ -51,7 +51,7 @@ userRouter.route('/:username')
       }
       if (!user) {
         return res.write({
-          data: `NOT USER`
+          data: false
         })
       }
 
@@ -73,7 +73,7 @@ userRouter.route('/register')
       }
       if (user) {
         return res.write({
-          data: 'username taken'
+          data: false
         })
       }
 

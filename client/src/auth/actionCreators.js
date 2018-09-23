@@ -9,10 +9,18 @@ const loginUser = (username, password) => {
                 password: password
             })
             .then((res) => {
-                dispatch({
-                    type: actions.LOGIN,
-                    user: res.data
-                })
+                if(res.data){
+                    dispatch({
+                        type: actions.LOGIN,
+                        user: res.data
+                    })
+                }
+                else {
+                    dispatch({
+                        type: actions.USER_ERROR,
+                        error: 'FALSE PASSWORD/USERNAME'
+                    })
+                }
             })
             .catch((error) => {
                 dispatch({

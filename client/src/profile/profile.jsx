@@ -1,16 +1,26 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import inputs from 'react-stateless-input'
 import actionCreators from './actionCreators'
 
-//<button onClick={() => {this.props.logout()}}>LOGOUT</button>
+import LoggedInProfile from './loggedInProfile'
+import UserProfile from './userProfile'
 
 class Profile extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            task: ''
+        }
+    }
 
     componentDidMount() {
-        this.props.getUserTodos(this.props.username)
         this.props.getPageOwner(this.props.username)
+        this.props.getUserTodos(this.props.username)
+    }
+
+    handleInput = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     render() {
@@ -24,27 +34,14 @@ class Profile extends React.Component {
         } = this.props
         return (
             <div>
-                <h1>{pageOwner ? pageOwner.username : 'loading name'}</h1>
-                <div>
-                    <h3>YOUR TODOS</h3>
-                    <ul>
-                        {
-                            todos.map(todo => (
-                                <li>{todo.task}</li>
-                            ))
-                        }
-                    </ul>
-                </div>
-                <div>
-                    {
-                        pageOwner ? 
-                            currentUser ?
-                                currentUser.username === pageOwner.username ? 
-                                    <button onClick={logout}>LOGOUT</button> : ''
-                                        : ''
-                                            : ''
-                    }
-                </div>
+                {
+                    pageOwner ? 
+                        currentUser ? 
+                            currentUser.username === pageOwner.username ? <LoggedInProfile user={currentUser} todos={todos} addTodo={addTodo} removeTodo={removeTodo} logout={logout} /> 
+                                : <UserProfile user={pageOwner} todos={todos} /> 
+                                    : <UserProfile user={pageOwner} todos={todos} /> 
+                                        : <div>loading page</div>
+                }
             </div>
         )
     }

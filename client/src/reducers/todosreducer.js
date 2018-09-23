@@ -9,7 +9,7 @@ export default (state = {
             }
         case 'ADD_USER_TODOS':
             return {
-                userTodos: [...state.userTodos, action.todo]
+                userTodos: [...state.userTodos].concat([action.todo])
             }
         case 'REMOVE_TODO':
             return {
