@@ -6,7 +6,10 @@ todosRouter.route('/')
   .get((req, res) => {
     Todos.find({}, (error, allTodos) => {
       if (error) {
-        res.json(error)
+        return res.write({ data: error })
+      }
+      if(!allTodos){
+       return res.write({ data: false })
       }
       res.json(allTodos)
     })
@@ -19,7 +22,10 @@ todosRouter.route('/:username')
     } = req.params
     Todos.find({username: username}, (error, userTodos) => {
       if(error) {
-        res.json(error)
+       return res.write({ data: error })
+      }
+      if(!userTodos){
+       return res.write({ data: false })
       }
       res.json(userTodos)
     })
@@ -46,9 +52,9 @@ todosRouter.route('/delete/:id')
     } = req.params
     Todos.deleteOne({_id: id}, (error) => {
       if(error) {
-        res.json(error)
+       return res.write(error)
       }
-      res.json('success delete')
+      res.send('success delete')
     })
   })
 
@@ -59,7 +65,7 @@ todosRouter.route('/update/:id')
     } = req.params
     Todos.findByIdAndUpdate(id, {complete: true}, (error) => {
       if(error) {
-        res.json(error)
+       return res.write(error)
       }
       res.json('updated')
     })

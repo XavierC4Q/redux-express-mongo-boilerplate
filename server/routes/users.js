@@ -6,9 +6,33 @@ userRouter.route('/')
   .get((req, res) => {
     Users.find({}, (error, users) => {
       if (error) {
-        res.json(error)
+        return res.send(error)
       }
-      res.json(users)
+      if (!users) {
+        return res.send(new Error('cannot attain all users'))
+      }
+      return res.send(users)
+    })
+  })
+
+
+userRouter.route('/logout')
+  .get((req, res) => {
+    req.session.destroy()
+    res.send('logged out nicely')
+  })
+
+
+userRouter.route('/loggedIn')
+  .get((req, res) => {
+    const user = req.session.passport
+    if (user) {
+      return res.send({
+        data: user.user
+      })
+    }
+    return res.send({
+      data: false
     })
   })
 
@@ -17,15 +41,21 @@ userRouter.route('/:username')
     const {
       username
     } = req.params
-    Users.findOne({ username: username }, (error, user) => {
+    Users.findOne({
+      username: username
+    }, (error, user) => {
       if (error) {
-        res.json(error)
+        return res.write({
+          data: error
+        })
       }
       if (!user) {
-        res.json(new Error('NOT A USER'))
+        return res.write({
+          data: `NOT USER`
+        })
       }
 
-      res.json(user)
+      return res.json(user)
     })
   })
 
@@ -39,10 +69,12 @@ userRouter.route('/register')
       username: username
     }, async (error, user) => {
       if (error) {
-        res.json(error)
+        return res.write(`YOUR ERROR IN REGISTER IS ${error}`)
       }
       if (user) {
-        res.json(new Error('user taken'))
+        return res.write({
+          data: 'username taken'
+        })
       }
 
       let newUser = new Users({
@@ -54,7 +86,7 @@ userRouter.route('/register')
         id: newUser._id,
         username: newUser.username
       }
-      res.json(registeredUser)
+      return res.json(registeredUser)
     })
   })
 
@@ -65,42 +97,44 @@ userRouter.route('/login')
       password
     } = req.body
     const loggedInUser = req.session.passport
-    if (loggedInUser) {
-      res.json(new Error('Someone is logged in already'))
-    }
-
-    Users.authenticate()(username, password, (error, user) => {
-      if (error) {
-        res.json(error)
-      }
-      if (!user) {
-        res.json(new Error('NOT A USER'))
-      }
-
-      req.logIn(user, (error) => {
+    if (!loggedInUser) {
+      Users.authenticate()(username, password, (error, user) => {
         if (error) {
-          res.json(new Error('failure to login req'))
+          return res.write({
+            data: error
+          })
         }
-        if(!user){
-          res.json(new Error(`USER LOGIN FAIL`))
+        if (!user) {
+          return res.write({
+            data: false
+          })
         }
-        const loginSuccess = {
-          id: user._id,
-          username: user.username
-        }
-        res.json(loginSuccess)
+
+        req.logIn(user, (error) => {
+          if (error) {
+            return res.write({
+              data: error
+            })
+          }
+          if (!user) {
+            return res.write({
+              data: false
+            })
+          }
+          const loginSuccess = {
+            id: user._id,
+            username: user.username
+          }
+          return res.json(loginSuccess)
+        })
       })
-    })
+    } else {
+      return res.json({
+        data: false
+      })
+    }
   })
 
-userRouter.route('/logout')
-  .get((req, res) => {
-    if(req.session.passport){
-      req.session.destroy()
-      res.json('successful logout')
-    }
-    res.json('already logged in')
-  })
 
 
 module.exports = userRouter;
