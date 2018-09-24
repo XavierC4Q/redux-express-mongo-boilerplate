@@ -19,7 +19,9 @@ userRouter.route('/')
 userRouter.route('/logout')
   .get((req, res) => {
     req.session.destroy()
-    res.send({ data: true })
+    res.send({
+      data: true
+    })
   })
 
 
@@ -36,7 +38,7 @@ userRouter.route('/loggedIn')
     })
   })
 
-userRouter.route('/:username')
+userRouter.route('/find/:username')
   .get((req, res) => {
     const {
       username
@@ -45,14 +47,10 @@ userRouter.route('/:username')
       username: username
     }, (error, user) => {
       if (error) {
-        return res.write({
-          data: error
-        })
+        return res.write(`error error ${error}`)
       }
       if (!user) {
-        return res.write({
-          data: false
-        })
+        return res.write('not user')
       }
 
       return res.json(user)
@@ -72,9 +70,7 @@ userRouter.route('/register')
         return res.write(`YOUR ERROR IN REGISTER IS ${error}`)
       }
       if (user) {
-        return res.write({
-          data: false
-        })
+        return res.write('USERNAME TAKEN')
       }
 
       let newUser = new Users({
@@ -100,26 +96,18 @@ userRouter.route('/login')
     if (!loggedInUser) {
       Users.authenticate()(username, password, (error, user) => {
         if (error) {
-          return res.write({
-            data: error
-          })
+          return res.write(`ERROR ERROR ${error}`)
         }
         if (!user) {
-          return res.write({
-            data: false
-          })
+          return res.write('not user')
         }
 
         req.logIn(user, (error) => {
           if (error) {
-            return res.write({
-              data: error
-            })
+            return res.write(`ERROR ERROR ${error}`)
           }
           if (!user) {
-            return res.write({
-              data: false
-            })
+            return res.write('not user')
           }
           const loginSuccess = {
             id: user._id,
