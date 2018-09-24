@@ -3,7 +3,7 @@ import * as actions from './actions'
 
 const getUser = (username) => {
     return (dispatch) => {
-        axios.get(`/users/${username}`).then((res) => {
+        axios.get(`/users/find/${username}`).then((res) => {
             dispatch({ type: actions.GET_USER, user: res.data })
         })
         .catch((error) => {
@@ -30,7 +30,7 @@ const logoutUser = () => {
 
 const getUserTodos = (username) => {
     return (dispatch) => {
-        axios.get(`/todos/${username}`).then((res) => {
+        axios.get(`/todos/find/${username}`).then((res) => {
             dispatch({ type: actions.GET_USER_TODOS, todos: res.data })
         }).catch((error) => {
             dispatch({ type: actions.ERROR_TODOS, error: error })

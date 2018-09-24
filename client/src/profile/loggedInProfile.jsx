@@ -1,42 +1,26 @@
 import React from 'react'
+import { Route, Link, Switch } from 'react-router-dom'
+import AddTodo from './utils/addTodo'
 
 class LoggedInProfile extends React.Component {
-    constructor(){
-        super()
-        this.state = {
-            task: ''
-        }
-    }
-
-    handleInput = (e) => {
-        this.setState({ [e.target.name] : e.target.value })
-    }
-
-    submitTodo = () => {
-        if(this.state.task){
-            this.props.addTodo(this.props.user.username,this.state.task)
-            this.setState({ task: '' })
-        }
-    }
 
     render(){
-        const { user, todos, logout, removeTodo } = this.props
-        console.log(todos)
+        const { user, todos, logout, addTodo, removeTodo } = this.props
+        console.log(this.props)
         return(
             <div>
-                <h1>WELCOME BACK {user.username}</h1>
-                <div>
-                    <h3>ADD TODO</h3>
-                    <input type='text' name='task' value={this.state.task} onInput={this.handleInput} placeholder='Put todo here'/>
-                    <button onClick={this.submitTodo}>SUBMIT</button>
-                </div>
-                <div>
-                    <h3>YOUR TODOS</h3>
-                    {todos.map(todo => (
-                        <p>{todo.task}</p>
-                    ))}
-                </div>
+                <nav>
+                    <Link to='/profile/add'>Add Todo</Link>
+                </nav>
                 <button onClick={() => logout()}>LOGOUT</button>
+                <Switch>
+                    <Route exact path='/profile/add' render={() => {
+                        return(<AddTodo addTodo={addTodo} username={user.username}/>)
+                    }}/>
+                    <Route path='/profile/:username' render={() => {
+                        return(<div><h1>THE LOGGED IN PROFILE PAGE</h1></div>)
+                    }}/>
+                </Switch>
             </div>
         )
     }
