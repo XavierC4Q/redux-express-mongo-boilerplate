@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import {Route, Switch, Redirect, withRouter} from 'react-router-dom'
-import Register from './auth/register'
-import Login from './auth/login'
-import Landing from './landing/landing'
-import Profile from './profile/profile'
+
+import Register from './auth/components/register'
+import Login from './auth/components/login'
+import Landing from './landing/components/landing'
+import Profile from './profile/components/profile'
 
 class App extends Component {
   render() {
@@ -22,6 +23,8 @@ class App extends Component {
             const { username } = props.match.params
             return(<Profile username={username}/>)
           }}/>
+          <Route path='/profile/:username/add' component={Profile}/>
+          <Route path='/profile/:username/todo/:id' component={Profile}/>
         </Switch>
       </div>
     );
