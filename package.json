@@ -1,0 +1,23 @@
+{
+  "name": "redux-express-mongo-boilerplate",
+  "version": "1.0.0",
+  "scripts": {
+    "client": "cd client && yarn start",
+    "server": "cd server && yarn start",
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XavierC4Q/redux-express-mongo-boilerplate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/XavierC4Q/redux-express-mongo-boilerplate/issues"
+  },
+  "homepage": "https://github.com/XavierC4Q/redux-express-mongo-boilerplate#readme",
+  "dependencies": {
+    "concurrently": "^4.0.1"
+  }
+}
