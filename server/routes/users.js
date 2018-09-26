@@ -27,15 +27,23 @@ userRouter.route('/logout')
 
 userRouter.route('/loggedIn')
   .get((req, res) => {
-    const user = req.session.passport
-    if (user) {
-      return res.send({
-        data: user.user
+    const loggedIn = req.session.passport
+    if (loggedIn) {
+      Users.findOne({ username: loggedIn.user }, (error, user) => {
+        if(error){
+          return res.write(`THE ERROR GETTING USER ${error}`)
+        }
+        if(!user){
+          return res.write('NOT A USER')
+        }
+        return res.json(user)
       })
     }
-    return res.send({
-      data: false
-    })
+    else {
+      return res.send({
+        data: false
+      })
+    }
   })
 
 userRouter.route('/find/:username')
