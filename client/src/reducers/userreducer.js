@@ -17,6 +17,11 @@ export default (state = {
                 currentUser: action.user,
                 allUsers: [...state.allUsers, action.user]
             }
+        case 'LOGGED_IN_USER':
+            return {
+                ...state,
+                currentUser: action.user
+            }
         case 'ALL_USERS':
             return {
                 ...state,

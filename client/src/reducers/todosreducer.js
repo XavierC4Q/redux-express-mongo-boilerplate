@@ -11,9 +11,31 @@ export default (state = {
             return {
                 userTodos: [...state.userTodos].concat([action.todo])
             }
-        case 'REMOVE_TODO':
+        case 'UPDATE_TODO':
+            let updated = []
+            state.userTodos.forEach(todo => {
+                if(todo._id === action.todoID){
+                    todo.complete = true
+                    updated.push(todo)
+                }
+                else {
+                    updated.push(todo)
+                }
+            })
             return {
-                userTodos: [...state.userTodos.slice(0,state.userTodos.length - 1)]
+                ...state,
+                userTodos: updated
+            }
+        case 'REMOVE_TODO':
+            let removedTodo = []
+            state.userTodos.forEach(todo => {
+                if(todo._id !== action.todoID){
+                    removedTodo.push(todo)
+                }
+            })
+            return {
+                ...state,
+                userTodos: removedTodo
             }
         case 'ERROR_TODOS':
             return {
