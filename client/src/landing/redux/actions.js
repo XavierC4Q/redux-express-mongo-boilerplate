@@ -1,0 +1,9 @@
+const ALL_USERS = 'ALL_USERS'
+const USER_ERROR = 'USER_ERROR'
+const LOGGED_IN_USER = 'LOGGED_IN_USER'
+
+module.exports = {
+    ALL_USERS,
+    LOGGED_IN_USER,
+    USER_ERROR
+}
